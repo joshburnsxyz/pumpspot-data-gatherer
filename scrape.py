@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 ## List of Wikipedia Articles
 targets = [
@@ -14,6 +13,26 @@ targets = [
 driver = webdriver.Chrome('./chromedriver')
 
 for t in targets:
+  # Open target URL
   driver.get(t)
+
+  # Find the Infobox table on the right of the page
   infobox = driver.find_element_by_class_name("infobox")
-  print(infobox)
+  infobox_txt = infobox[0].text
+
+  # TODO: Find size, capacity, & gps data in the infobox
+  # t_size = None
+  # t_capacity = None
+  # t_gps_lat = None
+  # t_gps_lon = None
+  
+  # TODO: Package data and save in format to mimic rails fixture data
+  # TODO: Write packaged data to YAML file in ./<NAME FROM URL>.yml (From here we append to our rails fixtures/seeds file)
+
+## Cleanup
+
+# Kill driver
+driver.quit()
+
+## Print done
+print('done')
