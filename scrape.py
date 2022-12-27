@@ -6,23 +6,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import yaml
 
-## List of Wikipedia Articles
-targets = [
-  "https://en.wikipedia.org/wiki/Gippsland_Lakes",
-  "https://en.wikipedia.org/wiki/Lake_Wendouree",
-  "https://en.wikipedia.org/wiki/Lake_Tyrrell",
-  "https://en.wikipedia.org/wiki/Lake_Hindmarsh",
-  "https://en.wikipedia.org/wiki/Lake_Colac",
-  "https://en.wikipedia.org/wiki/Lake_Corangamite",
-  "https://en.wikipedia.org/wiki/Lake_Coorong",
-  "https://en.wikipedia.org/wiki/Tarago_Reservoir"
-]
-
 ## Create driver instance
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-# Create results list
+# Create target and results lists
 results = []
+
+target_url_file = open("urls.txt")
+targets = target_url_file.readlines()
 
 for t in targets:
   # Initialize empty variables
