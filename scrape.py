@@ -3,6 +3,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 
 ## List of Wikipedia Articles
 targets = [
@@ -20,8 +21,11 @@ for t in targets:
   driver.get(t)
 
   # Find the Infobox table on the right of the page
-  infobox = driver.find_element_by_class_name("infobox")
-  infobox_txt = infobox[0].text
+  infobox = driver.find_element(By.CLASS_NAME, 'infobox')
+  rows = infobox.find_elements(By.TAG_NAME, 'tr')
+
+  for r in rows:
+   print(r.text)
 
   # TODO: Find size, capacity, & gps data in the infobox
   # t_size = None
