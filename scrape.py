@@ -76,9 +76,6 @@ for t in targets:
 yamldump = yaml.dump(results, allow_unicode=True)
 print(yamldump)
 
-# Kill driver
+# cleanup
 driver.quit()
-
-## Print done
-print('done')
 quit()
