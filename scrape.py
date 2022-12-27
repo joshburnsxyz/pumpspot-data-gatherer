@@ -4,10 +4,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+import yaml
 
 ## List of Wikipedia Articles
 targets = [
   "https://en.wikipedia.org/wiki/Gippsland_Lakes",
+  "https://en.wikipedia.org/wiki/Lake_Wendouree",
+  "https://en.wikipedia.org/wiki/Lake_Tyrrell",
+  "https://en.wikipedia.org/wiki/Lake_Hindmarsh",
+  "https://en.wikipedia.org/wiki/Lake_Colac",
+  "https://en.wikipedia.org/wiki/Lake_Corangamite",
+  "https://en.wikipedia.org/wiki/Lake_Coorong",
+  "https://en.wikipedia.org/wiki/Tarago_Reservoir"
 ]
 
 ## Create driver instance
@@ -65,8 +73,8 @@ for t in targets:
   }
   results.append(datarec)
 
-## Cleanup
-print(results)
+yamldump = yaml.dump(results, allow_unicode=True)
+print(yamldump)
 
 # Kill driver
 driver.quit()
