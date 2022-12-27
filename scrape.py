@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+from rich.progress import track
 import yaml
 
 ## Create driver instance
@@ -13,6 +14,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 results = []
 
 target_url_file = open("urls.txt")
+output_file = open("output.yml", "w+")
 targets = target_url_file.readlines()
 
 for t in targets:
@@ -33,9 +35,7 @@ for t in targets:
   # Extract Name
   t_name = rows[0].text
 
-  print(f"Processing {t_name}")
-
-  for r in rows:
+  for r in track(rows, description=t_name):
     # Split label from actual data
     p = r.text.split(" ", 1)
 
@@ -64,9 +64,10 @@ for t in targets:
   }
   results.append(datarec)
 
-yamldump = yaml.dump(results, allow_unicode=True)
-print(yamldump)
+yamldump = yaml.dump(results, output_file, allow_unicode=True)
 
 # cleanup
 driver.quit()
+target_url_file.close()
+output_file.close()
 quit()
