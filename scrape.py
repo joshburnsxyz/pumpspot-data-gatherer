@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 ## List of Wikipedia Articles
 targets = [
@@ -9,8 +11,9 @@ targets = [
   "https://en.wikipedia.org/wiki/Lake_Tyrrell",
   "https://en.wikipedia.org/wiki/Lake_Colac"
 ]
+
 ## Create driver instance
-driver = webdriver.Chrome('./chromedriver')
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 for t in targets:
   # Open target URL
