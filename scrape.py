@@ -46,14 +46,13 @@ for t in targets:
       t_gps_lat = parsed_coords[0]
       t_gps_lon = parsed_coords[1]
 
-    # Extract size (surface area)
-    if r.text.startswith("Surface area"):
-      t_size = p[1].split(" ")[1]
-
   datarec = {
     "name": t_name,
-    "size": t_size,
-    "capacity": t_capacity,
+    "category": 5, # Category 5 = Lake
+    "designation": "PLACEHOLDER",
+    "salt_water": None,
+    "size": None,
+    "capacity": None,
     "gps_lat": t_gps_lat,
     "gps_lon": t_gps_lon
   }
