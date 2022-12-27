@@ -8,27 +8,6 @@ from rich.progress import track
 import yaml
 import re
 
-def dms2dd(dms):
-  """
-  Convert DMS style GPS Coordinates to DD style coordinates
-  """
-  dmsreg = re.split('[°\'"]', dms)
-  deg = dmsreg[0]
-
-  minutes_p = dmsreg[1][-2:]
-  if minutes_p == "′S":
-    minutes = dmsreg[1][0:2]
-  else:
-    minutes = dmsreg[1]
-
-  try:
-    seconds = dmsreg[2]
-  except:
-    seconds = 00
-
-  dd = int(deg) + float(minutes)/60 + float(seconds)/3600
-  return dd
-
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 results = []
 target_url_file = open("urls.txt")
@@ -69,8 +48,8 @@ for t in targets:
     "salt_water": None,
     "size": None,
     "capacity": None,
-    "gps_lat": dms2dd(t_gps_lat),
-    "gps_lon": dms2dd(t_gps_lon)
+    "gps_lat": t_gps_lat,
+    "gps_lon": t_gps_lon
   }
   results.append(datarec)
 
