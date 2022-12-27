@@ -7,18 +7,13 @@ from selenium.webdriver.common.by import By
 from rich.progress import track
 import yaml
 
-## Create driver instance
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-
-# Create target and results lists
 results = []
-
 target_url_file = open("urls.txt")
 output_file = open("output.yml", "w+")
 targets = target_url_file.readlines()
 
 for t in targets:
-  # Initialize empty variables
   t_name = None
   t_size = None
   t_capacity = None
@@ -64,7 +59,8 @@ for t in targets:
   }
   results.append(datarec)
 
-yamldump = yaml.dump(results, output_file, allow_unicode=True)
+# Write formatted YAML data to output_file
+yaml.dump(results, output_file, allow_unicode=True)
 
 # cleanup
 driver.quit()
