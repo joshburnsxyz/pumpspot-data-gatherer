@@ -8,15 +8,22 @@ from selenium.webdriver.common.by import By
 ## List of Wikipedia Articles
 targets = [
   "https://en.wikipedia.org/wiki/Gippsland_Lakes",
-  "https://en.wikipedia.org/wiki/Lake_Hindmarsh",
-  "https://en.wikipedia.org/wiki/Lake_Tyrrell",
-  "https://en.wikipedia.org/wiki/Lake_Colac"
 ]
 
 ## Create driver instance
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
+# Create results list
+results = []
+
 for t in targets:
+  # Initialize empty variables
+  t_name = None
+  t_size = None
+  t_capacity = None
+  t_gps_lat = None
+  t_gps_lon = None
+ 
   # Open target URL
   driver.get(t)
 
@@ -24,17 +31,29 @@ for t in targets:
   infobox = driver.find_element(By.CLASS_NAME, 'infobox')
   rows = infobox.find_elements(By.TAG_NAME, 'tr')
 
-  for r in rows:
-   print(r.text)
+  # Extract Name
+  t_name = rows[0].text
 
-  # TODO: Find size, capacity, & gps data in the infobox
-  # t_size = None
-  # t_capacity = None
-  # t_gps_lat = None
-  # t_gps_lon = None
-  
-  # TODO: Package data and save in format to mimic rails fixture data
-  # TODO: Write packaged data to YAML file in ./<NAME FROM URL>.yml (From here we append to our rails fixtures/seeds file)
+  print(f"Processing {t_name}")
+
+  for r in rows:
+    # Split label from actual data
+    p = r.text.split(" ", 1)
+
+    # Extract coordiants
+    if r.text.startswith("Coordinates"):
+        parsed_coords = p[1].split("\n", 1)[0].split(" ")
+        t_gps_lat = parsed_coords[0]
+        t_gps_lon = parsed_coords[1]
+
+  datarec = {
+    "name": t_name,
+    "size": t_size,
+    "capacity": t_capacity,
+    "gps_lat": t_gps_lat,
+    "gps_lon": t_gps_lon
+  }
+  print(datarec)
 
 ## Cleanup
 
