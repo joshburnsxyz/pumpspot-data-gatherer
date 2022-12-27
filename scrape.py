@@ -42,16 +42,19 @@ for t in targets:
 
     # Extract coordiants
     if r.text.startswith("Coordinates: "):
-        parsed_coords = p[1].split(" ")
-        t_gps_lat = parsed_coords[0]
-        t_gps_lon = parsed_coords[1]
+      parsed_coords = p[1].split(" ")
+      t_gps_lat = parsed_coords[0]
+      t_gps_lon = parsed_coords[1]
 
-    # Extract coordiants
+    # Extract coordiants (fallback)
     if r.text.startswith("Coordinates"):
-        parsed_coords = p[1].split("\n", 1)[0].split(" ")
-        t_gps_lat = parsed_coords[0]
-        t_gps_lon = parsed_coords[1]
+      parsed_coords = p[1].split("\n", 1)[0].split(" ")
+      t_gps_lat = parsed_coords[0]
+      t_gps_lon = parsed_coords[1]
 
+    # Extract size (surface area)
+    if r.text.startswith("Surface area"):
+      t_size = p[1].split(" ")[1]
 
   datarec = {
     "name": t_name,
@@ -60,12 +63,14 @@ for t in targets:
     "gps_lat": t_gps_lat,
     "gps_lon": t_gps_lon
   }
-  print(datarec)
+  results.append(datarec)
 
 ## Cleanup
+print(results)
 
 # Kill driver
 driver.quit()
 
 ## Print done
 print('done')
+quit()
